@@ -1,7 +1,7 @@
 ---
 services: Compute
-platforms: java
-author: viananth
+platforms: dotnet
+author: seyadava
 ---
 
 # Getting Started with compute - Manage Virtual Machines in Hybrid Environment - in C# asynchronously #  
