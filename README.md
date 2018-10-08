@@ -1,57 +1,67 @@
-# Project Name
+---
+services: Compute
+platforms: java
+author: viananth
+---
 
-(short, 1-3 sentenced, description of the project)
+# Getting Started with compute - Manage Virtual Machines in Hybrid Environment - in C# asynchronously #  
 
-## Features
+Azure Stack Compute sample for managing virtual machines - 
+- Create a resource group
+- Create a storage account
+- Create a virtual network
+- Create a subnet in a virtual network
+- Create a public IP address
+- Create a network interface
+- Create a data disk
+- Create a linux virtual machine (unmanaged disk)
+- Tag the virtual machine
+- Add a data disk to the virtual machine
+- Detach a data disk from the virtual machine
+- Restart the virtual machine
+- Power off the virtual machine 
+- Delete the virtual machine
+- Create a linux virtual machine with managed disk
+- Delete the linux virtual machine with managed disk
 
-This project framework provides the following features:
+## Running this sample ##
 
-* Feature 1
-* Feature 2
-* ...
+To run this sample:
 
-## Getting Started
+1. Clone the repository using the following command:
 
-### Prerequisites
+    git clone https://github.com/Azure-Samples/hybrid-compute-dotnet-manage-vm.git
 
-(ideally very short, if any)
+2. Create an Azure service principal and assign a role to access the subscription. For instructions on creating a service principal in Azure Stack, see [Use Azure PowerShell to create a service principal with a certificate](https://docs.microsoft.com/en-us/azure/azure-stack/azure-stack-create-service-principals). 
 
-- OS
-- Library version
-- ...
+3. Set the following required environment variable values:
 
-### Installation
+    * AZURE_TENANT_ID
 
-(ideally very short)
+    * AZURE_CLIENT_ID
 
-- npm install [package name]
-- mvn install
-- ...
+    * AZURE_CLIENT_SECRET
 
-### Quickstart
-(Add steps to get up and running quickly)
+    * AZURE_SUBSCRIPTION_ID
 
-1. git clone [repository clone url]
-2. cd [respository name]
-3. ...
+    * ARM_ENDPOINT
 
+    * RESOURCE_LOCATION
 
-## Demo
+4. Change directory to sample:
 
-A demo app is included to show how to use the project.
+    * cd hybrid-compute-dotnet-manage-vm
 
-To run the demo, follow these steps:
+5. Run the sample:
 
-(Add steps to start up the demo)
+    dotnet restore
 
-1.
-2.
-3.
+    dotnet run
 
-## Resources
+## More information ##
 
-(Any additional resources or related projects)
+[Azure .Net Developer Center](https://azure.microsoft.com/en-us/develop/net/)
 
-- Link to supporting information
-- Link to similar sample
-- ...
+---
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
