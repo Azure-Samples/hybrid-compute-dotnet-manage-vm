@@ -4,7 +4,7 @@ platforms: dotnet
 author: seyadava
 ---
 
-## Getting Started with compute - Manage Virtual Machines in Hybrid Environment - in C# asynchronously ##  
+# Hybrid-Compute-DotNET-Manage-VM #  
 
 Azure Stack Compute sample for managing virtual machines - 
 - Create a resource group
