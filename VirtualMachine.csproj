@@ -10,6 +10,10 @@
     <PackageReference Include="Microsoft.Azure.Management.Profiles.hybrid_2018_03_01.Network" Version="0.9.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.Profiles.hybrid_2018_03_01.ResourceManager" Version="0.9.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.Profiles.hybrid_2018_03_01.Storage" Version="0.9.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.Profiles.hybrid_2019_03_01.Compute" Version="0.9.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.Profiles.hybrid_2019_03_01.Network" Version="0.9.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.Profiles.hybrid_2019_03_01.ResourceManager" Version="0.9.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.Profiles.hybrid_2019_03_01.Storage" Version="0.9.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager.Fluent" Version="1.16.0" />
   </ItemGroup>
 
