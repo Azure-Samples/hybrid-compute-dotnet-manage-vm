@@ -36,17 +36,19 @@ To run this sample:
 
 3. Set the following required environment variable values:
 
-    * AZURE_TENANT_ID
+    * AZS_TENANT_ID
 
-    * AZURE_CLIENT_ID
+    * AZS_CLIENT_ID
 
-    * AZURE_CLIENT_SECRET
+    * AZS_CLIENT_SECRET
 
-    * AZURE_SUBSCRIPTION_ID
+    * AZS_SUBSCRIPTION_ID
 
-    * ARM_ENDPOINT
+    * AZS_ARM_ENDPOINT
 
-    * RESOURCE_LOCATION
+    * AZS_LOCATION
+
+    * AZS_CERT_PATH
 
 4. Change directory to sample:
 
