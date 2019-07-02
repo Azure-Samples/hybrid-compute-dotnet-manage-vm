@@ -2,6 +2,7 @@
 topic: sample
 languages:
  - dotnet
+ - csharp
 products:
  - azure-sdks
 services: Azure-Stack
