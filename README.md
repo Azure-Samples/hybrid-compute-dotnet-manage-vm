@@ -1,4 +1,9 @@
 ---
+topic: sample
+languages:
+ - dotnet
+products:
+ - azure-sdks
 services: Azure-Stack
 platforms: dotnet
 author: seyadava
