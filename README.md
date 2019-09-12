@@ -1,13 +1,11 @@
 ---
-topic: sample
+page_type: sample
 languages:
- - dotnet
- - csharp
+- csharp
 products:
- - azure-sdks
-services: Azure-Stack
-platforms: dotnet
-author: seyadava
+- azure
+description: "Azure Stack Compute sample for managing virtual machines"
+urlFragment: hybrid-compute-dotnet-manage-vm
 ---
 
 # Hybrid-Compute-DotNET-Manage-VM #  
