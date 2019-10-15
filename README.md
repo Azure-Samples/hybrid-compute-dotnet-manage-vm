@@ -8,7 +8,7 @@ description: "Azure Stack Compute sample for managing virtual machines"
 urlFragment: hybrid-compute-dotnet-manage-vm
 ---
 
-# Hybrid-Compute-DotNET-Manage-VM #  
+# Hybrid-Compute-DotNET-Manage-VM
 
 Azure Stack Compute sample for managing virtual machines - 
 - Create a resource group
@@ -28,13 +28,13 @@ Azure Stack Compute sample for managing virtual machines -
 - Create a linux virtual machine with managed disk
 - Delete the linux virtual machine with managed disk
 
-## Running this sample ##
+## Running this sample
 
 To run this sample:
 
 1. Clone the repository using the following command:
 
-    git clone https://github.com/Azure-Samples/hybrid-compute-dotnet-manage-vm.git
+    `git clone https://github.com/Azure-Samples/hybrid-compute-dotnet-manage-vm.git`
 
 2. Create an Azure service principal and assign a role to access the subscription. For instructions on creating a service principal in Azure Stack, see [Use Azure PowerShell to create a service principal with a certificate](https://docs.microsoft.com/en-us/azure/azure-stack/azure-stack-create-service-principals). 
 
@@ -56,18 +56,16 @@ To run this sample:
 
 4. Change directory to sample:
 
-    * cd hybrid-compute-dotnet-manage-vm
+    * `cd hybrid-compute-dotnet-manage-vm`
 
 5. Run the sample:
+```bash
+dotnet restore
+dotnet run
+```
 
-    dotnet restore
+## More information
 
-    dotnet run
-
-## More information ##
-
-[Azure .Net Developer Center](https://azure.microsoft.com/en-us/develop/net/)
-
----
+[Azure .Net Developer Center](https://azure.microsoft.com/develop/net/).
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
