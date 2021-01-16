@@ -8,10 +8,10 @@
     using System.Net.Http;
     using System.Threading.Tasks;
 
-    using Profile2019Compute = Microsoft.Azure.Management.Profiles.hybrid_2019_03_01.Compute;
-    using Profile2019Network = Microsoft.Azure.Management.Profiles.hybrid_2019_03_01.Network;
-    using Profile2019ResourceManager = Microsoft.Azure.Management.Profiles.hybrid_2019_03_01.ResourceManager;
-    using Profile2019Storage = Microsoft.Azure.Management.Profiles.hybrid_2019_03_01.Storage;
+    using ProfileCompute = Microsoft.Azure.Management.Profiles.hybrid_2020_09_01.Compute;
+    using ProfileNetwork = Microsoft.Azure.Management.Profiles.hybrid_2020_09_01.Network;
+    using ProfileResourceManager = Microsoft.Azure.Management.Profiles.hybrid_2020_09_01.ResourceManager;
+    using ProfileStorage = Microsoft.Azure.Management.Profiles.hybrid_2020_09_01.Storage;
     using Microsoft.Azure.Management.ResourceManager.Fluent;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure.Authentication;
@@ -61,7 +61,7 @@
                 Console.WriteLine("Create resource group");
                 var rmTask = rmClient.ResourceGroups.CreateOrUpdateWithHttpMessagesAsync(
                     resourceGroupName,
-                    new Profile2019ResourceManager.Models.ResourceGroup
+                    new ProfileResourceManager.Models.ResourceGroup
                     {
                         Location = location
                     });
@@ -73,15 +73,15 @@
             }
 
             // Create a Storage Account
-            var storageAccount = new Profile2019Storage.Models.StorageAccount();
+            var storageAccount = new ProfileStorage.Models.StorageAccount();
             try
             {
                 Console.WriteLine(String.Format("Creating a storage account with name:{0}", storageAccountName));
-                var storageProperties = new Profile2019Storage.Models.StorageAccountCreateParameters
+                var storageProperties = new ProfileStorage.Models.StorageAccountCreateParameters
                 {
                     Location = location,
-                    Kind = Profile2019Storage.Models.Kind.Storage,
-                    Sku = new Profile2019Storage.Models.Sku(Profile2019Storage.Models.SkuName.StandardLRS)
+                    Kind = ProfileStorage.Models.Kind.Storage,
+                    Sku = new ProfileStorage.Models.Sku(ProfileStorage.Models.SkuName.StandardLRS)
                 };
 
                 var storageTask = storageClient.StorageAccounts.CreateWithHttpMessagesAsync(resourceGroupName, storageAccountName, storageProperties);
@@ -93,16 +93,16 @@
                 Console.WriteLine(String.Format("Could not create storage account {0}. Exception: {1}", storageAccountName, ex.Message));
             }
 
-            var subnet = new Profile2019Network.Models.Subnet();
+            var subnet = new ProfileNetwork.Models.Subnet();
 
             // Create virtual network
             try
             {
                 Console.WriteLine("Create vitual network");
-                var vnet = new Profile2019Network.Models.VirtualNetwork
+                var vnet = new ProfileNetwork.Models.VirtualNetwork
                 {
                     Location = location,
-                    AddressSpace = new Profile2019Network.Models.AddressSpace
+                    AddressSpace = new ProfileNetwork.Models.AddressSpace
                     {
                         AddressPrefixes = new List<string> { vnetAddresses }
                     }
@@ -122,7 +122,7 @@
             try
             {
                 Console.WriteLine("Create a subnet");
-                var subnetTask = networkClient.Subnets.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vnetName, subnetName, new Profile2019Network.Models.Subnet
+                var subnetTask = networkClient.Subnets.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vnetName, subnetName, new ProfileNetwork.Models.Subnet
                 {
                     AddressPrefix = subnetAddress,
                     Name = subnetName
@@ -136,14 +136,14 @@
             }
 
             // Create a public address
-            var ip = new Profile2019Network.Models.PublicIPAddress();
+            var ip = new ProfileNetwork.Models.PublicIPAddress();
             try
             {
                 Console.WriteLine("Create IP");
-                var ipProperties = new Profile2019Network.Models.PublicIPAddress
+                var ipProperties = new ProfileNetwork.Models.PublicIPAddress
                 {
                     Location = location,
-                    PublicIPAllocationMethod = Profile2019Network.Models.IPAllocationMethod.Dynamic,
+                    PublicIPAllocationMethod = ProfileNetwork.Models.IPAllocationMethod.Dynamic,
                 };
                 var ipTask = networkClient.PublicIPAddresses.CreateOrUpdateWithHttpMessagesAsync(
                     resourceGroupName,
@@ -158,17 +158,17 @@
             }
 
             // Create a network interface
-            var nic = new Profile2019Network.Models.NetworkInterface();
-            var vmStorageProfile = new Profile2019Compute.Models.StorageProfile();
+            var nic = new ProfileNetwork.Models.NetworkInterface();
+            var vmStorageProfile = new ProfileCompute.Models.StorageProfile();
             try
             {
                 Console.WriteLine("Create network interface");
-                var nicProperties = new Profile2019Network.Models.NetworkInterface
+                var nicProperties = new ProfileNetwork.Models.NetworkInterface
                 {
                     Location = location,
-                    IpConfigurations = new List<Profile2019Network.Models.NetworkInterfaceIPConfiguration>
+                    IpConfigurations = new List<ProfileNetwork.Models.NetworkInterfaceIPConfiguration>
                     {
-                        new Profile2019Network.Models.NetworkInterfaceIPConfiguration
+                        new ProfileNetwork.Models.NetworkInterfaceIPConfiguration
                         {
                             Name = string.Format("{0}-ipconfig", nicName),
                             PrivateIPAllocationMethod = "Dynamic",
@@ -192,20 +192,20 @@
             }
 
             // Create a data disk
-            var disk = new Profile2019Compute.Models.Disk();
+            var disk = new ProfileCompute.Models.Disk();
             try
             {
                 Console.WriteLine("Create a data disk");
-                var diskProperties = new Profile2019Compute.Models.Disk
+                var diskProperties = new ProfileCompute.Models.Disk
                 {
-                    CreationData = new Profile2019Compute.Models.CreationData
+                    CreationData = new ProfileCompute.Models.CreationData
                     {
-                        CreateOption = Profile2019Compute.Models.DiskCreateOption.Empty,
+                        CreateOption = ProfileCompute.Models.DiskCreateOption.Empty,
                     },
                     Location = location,
-                    Sku = new Profile2019Compute.Models.DiskSku
+                    Sku = new ProfileCompute.Models.DiskSku
                     {
-                        Name = Profile2019Compute.Models.StorageAccountTypes.StandardLRS
+                        Name = ProfileCompute.Models.StorageAccountTypes.StandardLRS
                     },
                     DiskSizeGB = 1,
                 };
@@ -222,13 +222,13 @@
             }
 
             // VM Hardware profile
-            var vmHardwareProfile = new Profile2019Compute.Models.HardwareProfile
+            var vmHardwareProfile = new ProfileCompute.Models.HardwareProfile
             {
                 VmSize = "Standard_A1"
             };
 
             // VM OS Profile
-            var vmOsProfile = new Profile2019Compute.Models.OSProfile
+            var vmOsProfile = new ProfileCompute.Models.OSProfile
             {
                 ComputerName = vmName,
                 AdminUsername = username,
@@ -236,11 +236,11 @@
             };
 
             // VM Network profile
-            var vmNetworkProfile = new Profile2019Compute.Models.NetworkProfile
+            var vmNetworkProfile = new ProfileCompute.Models.NetworkProfile
             {
-                NetworkInterfaces = new List<Profile2019Compute.Models.NetworkInterfaceReference>
+                NetworkInterfaces = new List<ProfileCompute.Models.NetworkInterfaceReference>
                 {
-                    new Profile2019Compute.Models.NetworkInterfaceReference
+                    new ProfileCompute.Models.NetworkInterfaceReference
                     {
                         Id = nic.Id,
                         Primary = true
@@ -252,20 +252,20 @@
             string diskUri = string.Format("{0}test/{1}.vhd", storageAccount.PrimaryEndpoints.Blob, diskName);
             var osDiskName = "osDisk";
             string osDiskUri = string.Format("{0}test/{1}.vhd", storageAccount.PrimaryEndpoints.Blob, osDiskName);
-            vmStorageProfile = new Profile2019Compute.Models.StorageProfile
+            vmStorageProfile = new ProfileCompute.Models.StorageProfile
             {
-                OsDisk = new Profile2019Compute.Models.OSDisk
+                OsDisk = new ProfileCompute.Models.OSDisk
                 {
                     Name = osDiskName,
-                    CreateOption = Profile2019Compute.Models.DiskCreateOptionTypes.FromImage,
-                    Caching = Profile2019Compute.Models.CachingTypes.ReadWrite,
-                    OsType = Profile2019Compute.Models.OperatingSystemTypes.Linux,
-                    Vhd = new Profile2019Compute.Models.VirtualHardDisk
+                    CreateOption = ProfileCompute.Models.DiskCreateOptionTypes.FromImage,
+                    Caching = ProfileCompute.Models.CachingTypes.ReadWrite,
+                    OsType = ProfileCompute.Models.OperatingSystemTypes.Linux,
+                    Vhd = new ProfileCompute.Models.VirtualHardDisk
                     {
                         Uri = osDiskUri
                     }
                 },
-                ImageReference = new Profile2019Compute.Models.ImageReference
+                ImageReference = new ProfileCompute.Models.ImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "UbuntuServer",
@@ -276,7 +276,7 @@
             };
 
             // Create Linux VM
-            var linuxVm = new Profile2019Compute.Models.VirtualMachine();
+            var linuxVm = new ProfileCompute.Models.VirtualMachine();
             try
             {
                 Console.WriteLine("Create a virtual machine");
@@ -284,7 +284,7 @@
                 var vmTask = computeClient.VirtualMachines.CreateOrUpdateWithHttpMessagesAsync(
                     resourceGroupName,
                     vmName,
-                    new Profile2019Compute.Models.VirtualMachine
+                    new ProfileCompute.Models.VirtualMachine
                     {
                         Location = location,
                         NetworkProfile = vmNetworkProfile,
@@ -307,7 +307,7 @@
             try
             {
                 Console.WriteLine("Tag virtual machine");
-                var vmTagTask = computeClient.VirtualMachines.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmName, new Profile2019Compute.Models.VirtualMachine
+                var vmTagTask = computeClient.VirtualMachines.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmName, new ProfileCompute.Models.VirtualMachine
                 {
                     Location = location,
                     Tags = new Dictionary<string, string> { { "who-rocks", "java" }, { "where", "on azure stack" } }
@@ -327,20 +327,20 @@
                 Console.WriteLine("Attach data disk to virtual machine");
                 string newDataDiskName = "dataDisk2";
                 string newDataDiskVhdUri = string.Format("{0}test/{1}.vhd", storageAccount.PrimaryEndpoints.Blob, newDataDiskName);
-                var dataDisk = new Profile2019Compute.Models.DataDisk
+                var dataDisk = new ProfileCompute.Models.DataDisk
                 {
-                    CreateOption = Profile2019Compute.Models.DiskCreateOptionTypes.Empty,
-                    Caching = Profile2019Compute.Models.CachingTypes.ReadOnly,
+                    CreateOption = ProfileCompute.Models.DiskCreateOptionTypes.Empty,
+                    Caching = ProfileCompute.Models.CachingTypes.ReadOnly,
                     DiskSizeGB = 1,
                     Lun = 2,
                     Name = newDataDiskName,
-                    Vhd = new Profile2019Compute.Models.VirtualHardDisk
+                    Vhd = new ProfileCompute.Models.VirtualHardDisk
                     {
                         Uri = newDataDiskVhdUri
                     }
                 };
                 vmStorageProfile.DataDisks.Add(dataDisk);
-                var addTask = computeClient.VirtualMachines.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmName, new Profile2019Compute.Models.VirtualMachine
+                var addTask = computeClient.VirtualMachines.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmName, new ProfileCompute.Models.VirtualMachine
                 {
                     Location = location,
                     StorageProfile = vmStorageProfile
@@ -358,7 +358,7 @@
             {
                 Console.WriteLine("Detach data disk from virtual machine");
                 vmStorageProfile.DataDisks.RemoveAt(0);
-                var detachTask = computeClient.VirtualMachines.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmName, new Profile2019Compute.Models.VirtualMachine {
+                var detachTask = computeClient.VirtualMachines.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vmName, new ProfileCompute.Models.VirtualMachine {
                     Location = location,
                     StorageProfile = vmStorageProfile
                 });
@@ -407,30 +407,30 @@
             }
 
             // VM Storage profile managed disk
-            vmStorageProfile = new Profile2019Compute.Models.StorageProfile
+            vmStorageProfile = new ProfileCompute.Models.StorageProfile
             {
-                DataDisks = new List<Profile2019Compute.Models.DataDisk>
+                DataDisks = new List<ProfileCompute.Models.DataDisk>
                 {
-                    new Profile2019Compute.Models.DataDisk
+                    new ProfileCompute.Models.DataDisk
                     {
-                        CreateOption = Profile2019Compute.Models.DiskCreateOptionTypes.Attach,
-                        ManagedDisk = new Profile2019Compute.Models.ManagedDiskParameters
+                        CreateOption = ProfileCompute.Models.DiskCreateOptionTypes.Attach,
+                        ManagedDisk = new ProfileCompute.Models.ManagedDiskParameters
                         {
-                            StorageAccountType = Profile2019Compute.Models.StorageAccountTypes.StandardLRS,
+                            StorageAccountType = ProfileCompute.Models.StorageAccountTypes.StandardLRS,
                             Id = disk.Id
                         },
-                        Caching = Profile2019Compute.Models.CachingTypes.ReadOnly,
+                        Caching = ProfileCompute.Models.CachingTypes.ReadOnly,
                         DiskSizeGB = 1,
                         Lun = 1,
                         Name = diskName,
                     }
                 },
-                OsDisk = new Profile2019Compute.Models.OSDisk
+                OsDisk = new ProfileCompute.Models.OSDisk
                 {
                     Name = osDiskName,
-                    CreateOption = Profile2019Compute.Models.DiskCreateOptionTypes.FromImage,
+                    CreateOption = ProfileCompute.Models.DiskCreateOptionTypes.FromImage,
                 },
-                ImageReference = new Profile2019Compute.Models.ImageReference
+                ImageReference = new ProfileCompute.Models.ImageReference
                 {
                     Publisher = "Canonical",
                     Offer = "UbuntuServer",
@@ -440,7 +440,7 @@
             };
 
             // Create Linux VM with managed disks
-            var linuxVmManagedDisk = new Profile2019Compute.Models.VirtualMachine();
+            var linuxVmManagedDisk = new ProfileCompute.Models.VirtualMachine();
             try
             {
                 Console.WriteLine("Create a virtual machine with managed disk");
@@ -448,7 +448,7 @@
                 var vmTask = computeClient.VirtualMachines.CreateOrUpdateWithHttpMessagesAsync(
                     resourceGroupName,
                     vmNameManagedDisk,
-                    new Profile2019Compute.Models.VirtualMachine
+                    new ProfileCompute.Models.VirtualMachine
                     {
                         Location = location,
                         NetworkProfile = vmNetworkProfile,
@@ -516,20 +516,20 @@
 
         static void Main(string[] args)
         {
-            var location = Environment.GetEnvironmentVariable("AZS_LOCATION");
-            var baseUriString = Environment.GetEnvironmentVariable("AZS_ARM_ENDPOINT");
-            var servicePrincipalId = Environment.GetEnvironmentVariable("AZS_CLIENT_ID");
-            var servicePrincipalSecret = Environment.GetEnvironmentVariable("AZS_CLIENT_SECRET");
-            var tenantId = Environment.GetEnvironmentVariable("AZS_TENANT_ID");
-            var subscriptionId = Environment.GetEnvironmentVariable("AZS_SUBSCRIPTION_ID");
-            var certificatePath = Environment.GetEnvironmentVariable("AZS_CERT_PATH");
-
+            var baseUriString = Environment.GetEnvironmentVariable("AZURE_ARM_ENDPOINT");
+            var location = Environment.GetEnvironmentVariable("AZURE_LOCATION");
+            var tenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+            var servicePrincipalId = Environment.GetEnvironmentVariable("AZURE_SP_CERT_ID");
+            var servicePrincipalSecret = Environment.GetEnvironmentVariable("AZURE_SP_CERT_PASS");
+            var certificatePath = Environment.GetEnvironmentVariable("AZURE_SP_CERT_PATH");
+            var subscriptionId = Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID");
+            
             runSample(tenantId, subscriptionId, servicePrincipalId, servicePrincipalSecret, location, baseUriString, certificatePath);
         }
 
-        private static Profile2019Storage.StorageManagementClient GetStorageClient(Uri baseUri, ServiceClientCredentials credential, string subscriptionId)
+        private static ProfileStorage.StorageManagementClient GetStorageClient(Uri baseUri, ServiceClientCredentials credential, string subscriptionId)
         {
-            var client = new Profile2019Storage.StorageManagementClient(baseUri: baseUri, credentials: credential)
+            var client = new ProfileStorage.StorageManagementClient(baseUri: baseUri, credentials: credential)
             {
                 SubscriptionId = subscriptionId
             };
@@ -538,9 +538,9 @@
             return client;
         }
 
-        private static Profile2019ResourceManager.ResourceManagementClient GetResourceManagementClient(Uri baseUri, ServiceClientCredentials credential, string subscriptionId)
+        private static ProfileResourceManager.ResourceManagementClient GetResourceManagementClient(Uri baseUri, ServiceClientCredentials credential, string subscriptionId)
         {
-            var client = new Profile2019ResourceManager.ResourceManagementClient(baseUri: baseUri, credentials: credential)
+            var client = new ProfileResourceManager.ResourceManagementClient(baseUri: baseUri, credentials: credential)
             {
                 SubscriptionId = subscriptionId
             };
@@ -549,9 +549,9 @@
             return client;
         }
 
-        private static Profile2019Network.NetworkManagementClient GetNetworkClient(Uri baseUri, ServiceClientCredentials credential, string subscriptionId)
+        private static ProfileNetwork.NetworkManagementClient GetNetworkClient(Uri baseUri, ServiceClientCredentials credential, string subscriptionId)
         {
-            var client = new Profile2019Network.NetworkManagementClient(baseUri: baseUri, credentials: credential)
+            var client = new ProfileNetwork.NetworkManagementClient(baseUri: baseUri, credentials: credential)
             {
                 SubscriptionId = subscriptionId
             };
@@ -560,9 +560,9 @@
             return client;
         }
 
-        private static Profile2019Compute.ComputeManagementClient GetComputeClient(Uri baseUri, ServiceClientCredentials credential, string subscriptionId)
+        private static ProfileCompute.ComputeManagementClient GetComputeClient(Uri baseUri, ServiceClientCredentials credential, string subscriptionId)
         {
-            var client = new Profile2019Compute.ComputeManagementClient(baseUri: baseUri, credentials: credential)
+            var client = new ProfileCompute.ComputeManagementClient(baseUri: baseUri, credentials: credential)
             {
                 SubscriptionId = subscriptionId
             };

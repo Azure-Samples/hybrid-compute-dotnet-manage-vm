@@ -39,30 +39,24 @@ To run this sample:
 2. Create an Azure service principal and assign a role to access the subscription. For instructions on creating a service principal in Azure Stack, see [Use Azure PowerShell to create a service principal with a certificate](https://docs.microsoft.com/en-us/azure/azure-stack/azure-stack-create-service-principals). 
 
 3. Set the following required environment variable values:
-
-    * AZS_TENANT_ID
-
-    * AZS_CLIENT_ID
-
-    * AZS_CLIENT_SECRET
-
-    * AZS_SUBSCRIPTION_ID
-
-    * AZS_ARM_ENDPOINT
-
-    * AZS_LOCATION
-
-    * AZS_CERT_PATH
+    * AZURE_ARM_ENDPOINT
+    * AZURE_LOCATION
+    * AZURE_TENANT_ID
+    * AZURE_SP_CERT_ID
+    * AZURE_SP_CERT_PASS
+    * AZURE_SP_CERT_PATH
+    * AZURE_SUBSCRIPTION_ID
 
 4. Change directory to sample:
-
-    * `cd hybrid-compute-dotnet-manage-vm`
+    ```
+    cd hybrid-compute-dotnet-manage-vm
+    ```
 
 5. Run the sample:
-```bash
-dotnet restore
-dotnet run
-```
+    ```
+    dotnet restore
+    dotnet run
+    ```
 
 ## More information
 
